@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentModesTable extends Migration
+class CreateComplainTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePaymentModesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_modes', function (Blueprint $table) {
+        Schema::create('complain_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->string('is_active', 50)->nullable();
@@ -28,6 +28,6 @@ class CreatePaymentModesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_modes');
+        Schema::dropIfExists('complain_types');
     }
 }
