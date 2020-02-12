@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'last_name', 'email', 'password', 'other_names', 'phone', 'age_at_reg',
+        'dob', 'avatar', 'folder_number', 'occupation', 'marital_status', 'address', 'city', 'state', 'national_id', 'source', 'nok', 'nok_relationship', 'nok_phone', 'nok_address', 'registered_by', 'sex',
+
+
     ];
 
     /**
@@ -28,6 +33,20 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return ucFirst($this->last_name) . ' ' . ucFirst($this->other_names);
+    }
+
+    public function getAgeAttribute()
+    {
+        if ($this->dob) {
+            $dob = new Carbon($this->dob);
+            return $dob->diffForHumans(null, true);
+        } else {
+            return $this->age_at_reg;
+        }
+    }
     /**
      * The attributes that should be cast to native types.
      *
@@ -35,5 +54,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'dob' => 'date',
     ];
 }
