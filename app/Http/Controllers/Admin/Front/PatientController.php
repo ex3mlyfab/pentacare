@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -15,6 +16,8 @@ class PatientController extends Controller
     public function index()
     {
         //
+        $patients = User::all()->sortByDesc('created_at');
+        return view('admin.patient.index', compact('patients'));
     }
 
     /**
@@ -25,6 +28,7 @@ class PatientController extends Controller
     public function create()
     {
         //
+        return view('admin.patient.create');
     }
 
     /**
